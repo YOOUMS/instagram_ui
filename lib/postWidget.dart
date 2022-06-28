@@ -57,7 +57,7 @@ class postWidget extends StatelessWidget {
             width: double.infinity,
             height: 200,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
                     image: NetworkImage(post?.image ?? ''), fit: BoxFit.cover)),
           ),
