@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:instagrem_ui/AddNewPost.dart';
 import 'package:instagrem_ui/dummy_data.dart';
 import 'postWidget.dart';
 
-class instgramUI extends StatelessWidget {
+class instgramUI extends StatefulWidget {
+  @override
+  State<instgramUI> createState() => _instgramUIState();
+}
+
+class _instgramUIState extends State<instgramUI> {
+  refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +35,16 @@ class instgramUI extends StatelessWidget {
               height: 32,
               width: 32,
             ),
-            Image.asset(
-              "assets/insIcons/plus.png",
-              height: 32,
-              width: 32,
+            GestureDetector(
+              onTap: (() =>
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AddPost(refresh);
+                  }))),
+              child: Image.asset(
+                "assets/insIcons/plus.png",
+                height: 32,
+                width: 32,
+              ),
             ),
             Image.asset(
               "assets/insIcons/like.png",

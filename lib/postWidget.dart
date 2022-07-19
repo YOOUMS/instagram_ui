@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +61,8 @@ class postWidget extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
-                    image: NetworkImage(post?.image ?? ''), fit: BoxFit.cover)),
+                    image: FileImage(File(post?.image ?? '')),
+                    fit: BoxFit.cover)),
           ),
           Row(
             children: [
