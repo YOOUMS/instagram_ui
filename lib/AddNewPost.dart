@@ -19,24 +19,28 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPostState extends State<AddPost> {
+  final _formKey = GlobalKey<FormState>();
   File? selectedImage;
   var contentController = TextEditingController();
   String? title;
 
   addNewPost() {
-    Post post = Post({
-      'content': contentController.text,
-      'postImage': selectedImage!.path,
-      'nolike': 10
-    });
-    User user = User({
-      'name': "Youms",
-      'image':
-          'https://media.istockphoto.com/photos/happy-smiling-man-looking-away-picture-id1158245623?k=20&m=1158245623&s=612x612&w=0&h=rGmn02kNdoQySPEoQmbbDBxOayL4sdW3QWqP9rjgxCg='
-    });
-    postRes postres = postRes.norma(post, user);
-    posts.add(postres);
-    widget.function();
+    if (_formKey.currentState!.validate()) {
+      Post post = Post({
+        'content': contentController.text,
+        'postImage': selectedImage!.path,
+        'nolike': 10
+      });
+      User user = User({
+        'name': "Youms",
+        'image':
+            'https://media.istockphoto.com/photos/happy-smiling-man-looking-away-picture-id1158245623?k=20&m=1158245623&s=612x612&w=0&h=rGmn02kNdoQySPEoQmbbDBxOayL4sdW3QWqP9rjgxCg='
+      });
+      postRes postres = postRes.norma(post, user);
+      posts.add(postres);
+      widget.function();
+      Navigator.pop(context);
+    }
   }
 
   getImage() async {
@@ -77,20 +81,27 @@ class _AddPostState extends State<AddPost> {
               SizedBox(
                 height: 10,
               ),
-              TextField(
-                decoration: InputDecoration(
-                    hintText: "Post Content",
-                    fillColor: Color.fromARGB(255, 238, 235, 235),
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(20))),
-                controller: contentController,
+              Form(
+                key: _formKey,
+                child: TextFormField(
+                  validator: (value) {
+                    if (value!.trim().isEmpty) return "This field required";
+                    if (value.trim().length < 10)
+                      return "Your text is less then 11 ";
+                  },
+                  decoration: InputDecoration(
+                      hintText: "Post Content",
+                      fillColor: Color.fromARGB(255, 238, 235, 235),
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(20))),
+                  controller: contentController,
+                ),
               ),
               ElevatedButton(
                   onPressed: () {
                     addNewPost();
-                    Navigator.pop(context);
                   },
                   child: Text("Post"))
             ]),
